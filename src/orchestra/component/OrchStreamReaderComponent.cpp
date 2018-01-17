@@ -1,7 +1,7 @@
 //
 // Created by Benjamin Rozière on 10/01/2018.
 //
-
+#include <iostream>
 #include "OrchStreamReaderComponent.h"
 
 OrchStreamReaderComponent::OrchStreamReaderComponent(std::istream &inputStream) : inputStream(inputStream) {

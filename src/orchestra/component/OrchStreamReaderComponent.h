@@ -6,7 +6,6 @@
 #define ORCHESTRA_ORCHSTREAMREADERCOMPONENT_H
 
 
-#include <iosfwd>
 #include <DSPatch.h>
 
 class OrchStreamReaderComponent : public DspComponent {
