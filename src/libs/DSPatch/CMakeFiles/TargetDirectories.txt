@@ -1,0 +1,7 @@
+/Users/benjamin/orchestra/src/libs/DSPatch/CMakeFiles/install/local.dir
+/Users/benjamin/orchestra/src/libs/DSPatch/CMakeFiles/install/strip.dir
+/Users/benjamin/orchestra/src/libs/DSPatch/CMakeFiles/install.dir
+/Users/benjamin/orchestra/src/libs/DSPatch/CMakeFiles/list_install_components.dir
+/Users/benjamin/orchestra/src/libs/DSPatch/CMakeFiles/rebuild_cache.dir
+/Users/benjamin/orchestra/src/libs/DSPatch/CMakeFiles/edit_cache.dir
+/Users/benjamin/orchestra/src/libs/DSPatch/CMakeFiles/DSPatch.dir
