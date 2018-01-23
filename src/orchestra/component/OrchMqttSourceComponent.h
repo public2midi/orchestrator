@@ -14,7 +14,9 @@ class OrchMqttSourceComponent : public DspComponent, public mosqpp::mosquittopp 
 
 
 public:
-    OrchMqttSourceComponent(const char* host, const char* topic);
+    static const int mqttDefaultPort = 1883;
+
+    explicit OrchMqttSourceComponent(const char *topic, const char *host="localhost", int port=mqttDefaultPort);
 
     virtual ~OrchMqttSourceComponent();
 
@@ -43,6 +45,7 @@ private:
 
     std::string _topic;
     std::string _host;
+    int _port;
 
     std::queue<std::string> _msgQueue;
 };

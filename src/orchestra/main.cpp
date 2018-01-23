@@ -21,7 +21,7 @@ int main() {
 
     OrchStreamWriterComponent writer(std::cout);
 
-    OrchMqttSourceComponent mqttCmp("localhost", "/test");
+    OrchMqttSourceComponent mqttCmp("/test");
 
     circuit.AddComponent(mqttCmp, "mqtt");
 

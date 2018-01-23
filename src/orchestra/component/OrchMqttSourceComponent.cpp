@@ -6,11 +6,12 @@
 #include "OrchMqttSourceComponent.h"
 
 
-OrchMqttSourceComponent::OrchMqttSourceComponent(const char* host, const char* topic) : _host(host),  _topic(topic) {
+OrchMqttSourceComponent::OrchMqttSourceComponent(const char *topic, const char *host, int port)
+        : _host(host), _topic(topic), _port(port) {
     AddOutput_();
 
     mosqpp::lib_init();
-    this->connect_async(_host.c_str());
+    this->connect_async(_host.c_str(), _port);
 }
 
 void OrchMqttSourceComponent::Process_(DspSignalBus &, DspSignalBus &out) {
@@ -32,7 +33,7 @@ OrchMqttSourceComponent::~OrchMqttSourceComponent() {
 
 void OrchMqttSourceComponent::on_connect(int i) {
     std::cout << "[MQTT]Connected !" << std::endl;
-    this->subscribe(nullptr, "/#");
+    this->subscribe(nullptr, _topic.c_str());
 }
 
 void OrchMqttSourceComponent::on_disconnect(int i) {
