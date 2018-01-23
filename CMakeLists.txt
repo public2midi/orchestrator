@@ -11,6 +11,13 @@ endmacro(ADD_SUBLIB)
 
 ADD_SUBLIB(DSPatch)
 
+set(WITH_SRV OFF)
+set(WITH_TLS OFF)
+add_subdirectory(src/libs/mosquitto)
+include_directories(src/libs/mosquitto/lib/cpp/)
+include_directories(src/libs/mosquitto/lib)
+
+
 add_subdirectory(src/orchestra)
 
 add_subdirectory(src/mockDataSimulator)

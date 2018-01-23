@@ -9,29 +9,32 @@
 #include "component/OrchSumComponent.h"
 #include "component/OrchStreamReaderComponent.h"
 #include "component/OrchStreamWriterComponent.h"
+#include "component/OrchMqttSourceComponent.h"
 
 int main() {
 
     DspCircuit circuit;
 
-    OrchStreamReaderComponent reader(std::cin);
+    //OrchStreamReaderComponent reader(std::cin);
 
-    OrchSumComponent sum;
+    //OrchSumComponent sum;
 
     OrchStreamWriterComponent writer(std::cout);
 
-    circuit.AddComponent(reader, "Reader");
-    circuit.AddComponent(sum, "Sum");
+    OrchMqttSourceComponent mqttCmp("/test");
+
+    circuit.AddComponent(mqttCmp, "mqtt");
+
+    //circuit.AddComponent(reader, "Reader");
+    //circuit.AddComponent(sum, "Sum");
     circuit.AddComponent(writer, "Writer");
 
-    circuit.ConnectOutToIn(reader, 0, sum, 0);
-    circuit.ConnectOutToIn(sum, 0, writer, 0);
+    circuit.ConnectOutToIn(mqttCmp, 0, writer, 0);
+    //circuit.ConnectOutToIn(sum, 0, writer, 0);
 
-    for (int i = 0; i < 10; i++) {
-        circuit.Tick();
-    }
-
+    circuit.StartAutoTick();
     getchar();
+    circuit.StopAutoTick();
 
     DSPatch::Finalize();
 
