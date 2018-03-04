@@ -7,8 +7,9 @@
 
 
 #include <dspatch/DspComponent.h>
-#include <mosquittopp.h>
+
 #include <queue>
+#include <cpp/mosquittopp.h>
 
 class OrchMqttSourceComponent : public DspComponent, public mosqpp::mosquittopp {
 

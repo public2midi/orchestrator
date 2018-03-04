@@ -1,24 +1,18 @@
 cmake_minimum_required(VERSION 3.8)
-project(orchestra VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 11)
 
-macro(ADD_SUBLIB libname)
-    file(GLOB sublib_sources "src/libs/${libname}/src/*.cpp")
-    add_library(${libname} SHARED ${sublib_sources})
-    include_directories("src/libs/${libname}/include")
-endmacro(ADD_SUBLIB)
+project(Orchestra VERSION 0.1 LANGUAGES CXX)
 
-ADD_SUBLIB(DSPatch)
+include_directories(DSPatch/include)
+include_directories(mosquitto/lib)
 
 set(WITH_SRV OFF)
 set(WITH_TLS OFF)
-add_subdirectory(src/libs/mosquitto)
-include_directories(src/libs/mosquitto/lib/cpp/)
-include_directories(src/libs/mosquitto/lib)
 
-
-add_subdirectory(src/orchestra)
-
-add_subdirectory(src/mockDataSimulator)
-
+add_subdirectory(OrchestraCore)
+add_subdirectory(OrchestraComponents)
+add_subdirectory(OrchestraGUI)
+add_subdirectory(OrchestraSimulator)
+add_subdirectory(DSPatch)
+add_subdirectory(mosquitto)

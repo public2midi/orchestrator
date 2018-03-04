@@ -7,7 +7,7 @@
 #include <thread>
 #include <mutex>
 
-#include "MockSensor.h"
+#include "../include/MockSensor.h"
 
 std::mutex cout_mu;
 

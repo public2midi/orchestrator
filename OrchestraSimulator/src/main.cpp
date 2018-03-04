@@ -4,10 +4,10 @@
 
 #include <thread>
 #include <random>
-
-#include "MockSensor.h"
+#include <MockSensor.h>
 
 #define DEFAULT_SENSOR 2
+
 #define MAX_MOCK_SENSOR 50
 
 int main(int argc, char **argv) {
