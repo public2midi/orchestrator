@@ -10,27 +10,26 @@
 #include "component/OrchStreamReaderComponent.h"
 #include "component/OrchStreamWriterComponent.h"
 #include "component/OrchMqttSourceComponent.h"
+#include "component/OrchMidiOutputComponent.h"
+#include "component/OrchMidiKeyProducer.h"
 
 int main() {
 
     DspCircuit circuit;
 
-    //OrchStreamReaderComponent reader(std::cin);
-
-    //OrchSumComponent sum;
-
     OrchStreamWriterComponent writer(std::cout);
-
     OrchMqttSourceComponent mqttCmp("/test");
+    OrchMidiKeyProducer producer(0x34);
+    OrchMidiOutputKeyComponent midiOutput;
 
     circuit.AddComponent(mqttCmp, "mqtt");
-
-    //circuit.AddComponent(reader, "Reader");
-    //circuit.AddComponent(sum, "Sum");
     circuit.AddComponent(writer, "Writer");
+    circuit.AddComponent(producer, "Producer");
+    circuit.AddComponent(midiOutput, "Output");
 
-    circuit.ConnectOutToIn(mqttCmp, 0, writer, 0);
-    //circuit.ConnectOutToIn(sum, 0, writer, 0);
+    circuit.ConnectOutToIn(mqttCmp, 0, producer, 0);
+    circuit.ConnectOutToIn(producer, 0, writer, 0);
+    circuit.ConnectOutToIn(producer, 0, midiOutput, 0);
 
     circuit.StartAutoTick();
     getchar();
