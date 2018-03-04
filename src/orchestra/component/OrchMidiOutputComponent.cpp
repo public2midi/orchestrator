@@ -22,14 +22,14 @@ OrchMidiOutputKeyComponent::OrchMidiOutputKeyComponent(): midiOut(new RtMidiOut(
 
 void OrchMidiOutputKeyComponent::Process_(DspSignalBus &input, DspSignalBus &) {
 
-    unsigned char key;
+    MidiKey key;
 
     std::vector<unsigned char> midiMessage;
 
     if (input.GetValue(0, key)) {
         midiMessage.push_back(MidiCommand::NOTE_ON);
         midiMessage.push_back(key);
-        midiMessage.push_back(90);
+        midiMessage.push_back(MidiKey::C1);
         midiOut->sendMessage(&midiMessage);
     }
 

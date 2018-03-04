@@ -12,6 +12,7 @@
 #include "component/OrchMqttSourceComponent.h"
 #include "component/OrchMidiOutputComponent.h"
 #include "component/OrchMidiKeyProducer.h"
+#include "component/OrchMidiTextToKeyComponent.h"
 
 int main() {
 
@@ -19,7 +20,7 @@ int main() {
 
     OrchStreamWriterComponent writer(std::cout);
     OrchMqttSourceComponent mqttCmp("/test");
-    OrchMidiKeyProducer producer(0x34);
+    OrchMidiTextToKeyComponent producer;
     OrchMidiOutputKeyComponent midiOutput;
 
     circuit.AddComponent(mqttCmp, "mqtt");

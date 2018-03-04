@@ -17,10 +17,6 @@ protected:
 
 private:
     RtMidiOut *midiOut;
-
-
-
-
 };
 
 
