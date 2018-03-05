@@ -2,16 +2,24 @@
 // Created by Benjamin Rozière on 09/01/2018.
 //
 
-#include <iostream>
-#include <Orchestrator.h>
+#include <QApplication>
+#include <QtpMain.h>
+#include "../include/DsprController.h"
 
-int main() {
+int main(int argc, char** argv) {
 
-    Orchestrator orchestrator;
+    //Orchestrator orchestrator;
 
-    orchestrator.start();
-    getchar();
-    orchestrator.stop();
+    //orchestrator.start();
+    //getchar();
+    //orchestrator.stop();
 
-    return EXIT_SUCCESS;
+    QApplication app(argc, argv);
+    QtpMain mainWindow;
+
+    mainWindow.show();
+
+    DsprController controller(mainWindow);
+
+    return app.exec();
 }

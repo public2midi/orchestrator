@@ -39,5 +39,13 @@ Orchestrator::~Orchestrator() {
     _circuit = nullptr;
 }
 
+bool Orchestrator::is_running() const {
+    return _running;
+}
+
+DspCircuit *Orchestrator::get_circuit() const {
+    return _circuit;
+}
+
 
 

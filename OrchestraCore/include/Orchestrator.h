@@ -11,11 +11,16 @@
 class Orchestrator {
 private:
     DspCircuit *_circuit;
+    bool _running;
+
 public:
     Orchestrator();
 
     void start(void);
     void stop(void);
+
+    bool is_running() const;
+    DspCircuit *get_circuit() const;
 
     virtual ~Orchestrator();
 };
