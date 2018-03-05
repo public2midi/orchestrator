@@ -5,16 +5,21 @@
 #include <iostream>
 #include "OrchMqttSourceComponent.h"
 
-
-OrchMqttSourceComponent::OrchMqttSourceComponent(const char *topic, const char *host, int port)
-        : _host(host), _topic(topic), _port(port) {
+OrchMqttSourceComponent::OrchMqttSourceComponent(const std::string topic, const std::string host, int port) {
     AddOutput_();
 
+    _host = AddParameter_("host", DspParameter(DspParameter::String, host));
+    _topic = AddParameter_("topic", DspParameter(DspParameter::String, topic));
+    _port = AddParameter_("port", DspParameter(DspParameter::Int, port));
+
     mosqpp::lib_init();
-    this->connect_async(_host.c_str(), _port);
+    this->connect_async(get_host().c_str(), get_port());
 }
 
+OrchMqttSourceComponent::OrchMqttSourceComponent(const std::string topic) : OrchMqttSourceComponent(topic, "localhost", mqttDefaultPort) {}
+
 void OrchMqttSourceComponent::Process_(DspSignalBus &, DspSignalBus &out) {
+
     if (!_started) {
         this->loop_start();
         _started = true;
@@ -26,14 +31,65 @@ void OrchMqttSourceComponent::Process_(DspSignalBus &, DspSignalBus &out) {
     }
 }
 
+bool OrchMqttSourceComponent::ParameterUpdating_(int index, DspParameter const &param) {
+    if (index == _topic) {
+        set_topic(*param.GetString());
+        return true;
+    } else if (index == _host) {
+        set_host(*param.GetString());
+        return true;
+    } else if (index == _port) {
+        set_port(*param.GetInt());
+        return true;
+    }
+
+    return false;
+}
+
 OrchMqttSourceComponent::~OrchMqttSourceComponent() {
     this->disconnect();
     this->loop_stop();
 }
 
+int OrchMqttSourceComponent::get_port() const {
+    return *GetParameter_(_port)->GetInt();
+}
+
+void OrchMqttSourceComponent::set_port(int port) {
+    SetParameter_(_port, DspParameter(DspParameter::Int, port));
+
+    this->disconnect();
+    this->connect_async(get_host().c_str(), get_port());
+}
+
+const std::string OrchMqttSourceComponent::get_topic() const {
+    return *GetParameter_(_topic)->GetString();
+}
+
+void OrchMqttSourceComponent::set_topic(const std::string topic) {
+    std::string oldTopic = get_topic();
+
+    SetParameter_(_topic, DspParameter(DspParameter::String, topic));
+
+    this->unsubscribe(nullptr, oldTopic.c_str());
+    this->subscribe(nullptr, get_topic().c_str());
+}
+
+const std::string OrchMqttSourceComponent::get_host() const {
+    return *GetParameter_(_host)->GetString();
+}
+
+void OrchMqttSourceComponent::set_host(const std::string host) {
+    SetParameter_(_host, DspParameter(DspParameter::String, host));
+
+    this->disconnect();
+    this->connect_async(get_host().c_str(), get_port());
+}
+
+/* ========== MQTT Callbacks ===================================== */
 void OrchMqttSourceComponent::on_connect(int i) {
     std::cout << "[MQTT]Connected !" << std::endl;
-    this->subscribe(nullptr, _topic.c_str());
+    this->subscribe(nullptr, get_topic().c_str());
 }
 
 void OrchMqttSourceComponent::on_disconnect(int i) {

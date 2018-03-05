@@ -9,6 +9,7 @@
 #include <iosfwd>
 #include <ostream>
 #include <DSPatch.h>
+#include <iostream>
 
 class OrchStreamWriterComponent : public DspComponent {
 
@@ -22,5 +23,17 @@ private:
     std::ostream& outputStream;
 };
 
+class OrchStreamWriterPlugin : public DspPlugin {
+public:
+    std::map<std::string, DspParameter> GetCreateParams() const {
+        return std::map<std::string, DspParameter>();
+    }
+
+    DspComponent *Create(std::map<std::string, DspParameter> &params) const {
+        return new OrchStreamWriterComponent(std::cout);
+    }
+};
+
+EXPORT_DSPPLUGIN(OrchStreamWriterPlugin)
 
 #endif //ORCHESTRA_ORCHSTREAMWRITERCOMPONENT_H

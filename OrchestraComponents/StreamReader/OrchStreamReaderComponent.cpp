@@ -17,5 +17,3 @@ void OrchStreamReaderComponent::Process_(DspSignalBus &, DspSignalBus &outputs) 
 
     outputs.SetValue(0, std::stoi(token));
 }
-
-

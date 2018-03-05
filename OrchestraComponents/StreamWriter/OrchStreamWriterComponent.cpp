@@ -16,4 +16,3 @@ void OrchStreamWriterComponent::Process_(DspSignalBus &inputs, DspSignalBus &) {
         this->outputStream << val << std::endl;
     }
 }
-

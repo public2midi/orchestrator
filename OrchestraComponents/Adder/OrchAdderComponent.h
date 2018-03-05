@@ -18,5 +18,17 @@ protected:
     void Process_(DspSignalBus &, DspSignalBus &) override;
 };
 
+class OrchAdderPlugin : public DspPlugin {
+
+    std::map<std::string, DspParameter> GetCreateParams() const {
+        return std::map<std::string, DspParameter>();
+    }
+
+    DspComponent *Create(std::map<std::string, DspParameter> &params) const {
+        return new OrchAdderComponent();
+    }
+};
+
+EXPORT_DSPPLUGIN(OrchAdderPlugin)
 
 #endif //ORCHESTRA_ORCHADDERCOMPONENT_H
