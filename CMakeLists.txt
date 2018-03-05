@@ -9,6 +9,7 @@ project(Orchestra VERSION 0.1 LANGUAGES CXX)
 
 include_directories(DSPatch/include)
 include_directories(mosquitto/lib)
+include_directories(RtMidi/include)
 
 set(WITH_SRV OFF)
 set(WITH_TLS OFF)
@@ -24,3 +25,4 @@ add_subdirectory(OrchestraSimulator)
 add_subdirectory(DSPatch)
 add_subdirectory(mosquitto)
 add_subdirectory(qtpatcher)
+add_subdirectory(RtMidi)
