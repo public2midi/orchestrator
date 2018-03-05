@@ -1,24 +1,28 @@
 cmake_minimum_required(VERSION 3.8)
-project(orchestra VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 11)
 
-macro(ADD_SUBLIB libname)
-    file(GLOB sublib_sources "src/libs/${libname}/src/*.cpp")
-    add_library(${libname} SHARED ${sublib_sources})
-    include_directories("src/libs/${libname}/include")
-endmacro(ADD_SUBLIB)
+set(CMAKE_AUTOMOC ON)
 
-ADD_SUBLIB(DSPatch)
+
+project(Orchestra VERSION 0.1 LANGUAGES CXX)
+
+include_directories(DSPatch/include)
+include_directories(mosquitto/lib)
+include_directories(RtMidi/include)
 
 set(WITH_SRV OFF)
 set(WITH_TLS OFF)
 
-add_subdirectory(src/libs/mosquitto)
-include_directories(src/libs/mosquitto/lib/cpp/)
-include_directories(src/libs/mosquitto/lib)
+set(CMAKE_PREFIX_PATH ~/Qt/5.10.1/clang_64)
 
+find_package(Qt5Widgets REQUIRED)
 
-add_subdirectory(src/orchestra)
-
-add_subdirectory(src/mockDataSimulator)
+add_subdirectory(OrchestraCore)
+add_subdirectory(OrchestraComponents)
+add_subdirectory(OrchestraGUI)
+add_subdirectory(OrchestraSimulator)
+add_subdirectory(DSPatch)
+add_subdirectory(mosquitto)
+add_subdirectory(qtpatcher)
+add_subdirectory(RtMidi)
