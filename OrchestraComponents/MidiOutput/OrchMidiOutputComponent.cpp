@@ -29,10 +29,14 @@ void OrchMidiOutputKeyComponent::Process_(DspSignalBus &input, DspSignalBus &) {
     if (input.GetValue(0, key)) {
         midiMessage.push_back(MidiCommand::NOTE_ON);
         midiMessage.push_back(key);
-        midiMessage.push_back(MidiKey::C1);
+        midiMessage.push_back(60);
         midiOut->sendMessage(&midiMessage);
     }
 
+}
+
+OrchMidiOutputKeyComponent::~OrchMidiOutputKeyComponent() {
+    midiOut->closePort();
 }
 
 
